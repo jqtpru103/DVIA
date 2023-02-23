@@ -1,0 +1,33 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: DownloadPipelineArtifact@2
+  inputs:
+    artifact: 'DVIAArtifact'
+    path: '$(System.DefaultWorkingDirectory)'
+
+- script: |
+    curl -o $(System.DefaultWorkingDirectory)/$(ipaFileName) https://github.com/jqtpru103/DVIA/DamnVulnerableiOSApp.ipa
+  displayName: 'Download DVIA.ipa'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    artifactName: $(artifactName)
+    targetPath: $(System.DefaultWorkingDirectory)/$(ipaFileName)
+
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'

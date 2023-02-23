@@ -12,8 +12,8 @@ pool:
 steps:
 - task: DownloadPipelineArtifact@2
   inputs:
-    artifact: 'DVIAArtifact'
-    path: '$(System.DefaultWorkingDirectory)'
+    artifact: 'DVIA'
+    path: '$(System.DefaultWorkingDirectory)/DVIA'
 
 - script: |
     curl -o $(System.DefaultWorkingDirectory)/$(ipaFileName) https://github.com/jqtpru103/DVIA/DamnVulnerableiOSApp.ipa

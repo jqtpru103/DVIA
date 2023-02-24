@@ -9,26 +9,24 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  artifactName: 'DVIA'
-
-# Define pipeline steps
 steps:
-  # Download the DamnVulnerableiOSApp.ipa file from the forked repository
-  - task: DownloadPipelineArtifact@2
-    inputs:
-      artifact: '$(artifactName)'
-      path: '$(System.ArtifactsDirectory)/$(artifactName)'
-      runVersion: 'latest'
-      downloadType: 'single'
-      itemPattern: 'DamnVulnerableiOSApp.ipa'
+- task: DownloadPipelineArtifact@2
+  inputs:
+    artifact: 'DVIA'
+    path: '$(System.ArtifactsDirectory)/DVIA'
+    downloadType: 'single'
 
-  # Publish the DamnVulnerableiOSApp.ipa file as a pipeline artifact
-  - task: PublishPipelineArtifact@1
-    inputs:
-      artifactName: '$(artifactName)'
-      targetPath: '$(System.ArtifactsDirectory)/$(artifactName)/DamnVulnerableiOSApp.ipa'
-      publishLocation: 'pipeline'
+- script: |
+    # Navigate to the directory containing the .ipa file
+    cd $(System.ArtifactsDirectory)/DVIA
+    # Copy the .ipa file to the artifacts staging directory
+    cp DamnVulnerableiOSApp.ipa $(Build.ArtifactStagingDirectory)
+  displayName: 'Copy .ipa file to artifacts staging directory'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    artifactName: 'DVIA.ipa'
+    pathToPublish: '$(Build.ArtifactStagingDirectory)'
 
 - script: echo Hello, world!
   displayName: 'Run a one-line script'

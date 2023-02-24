@@ -9,20 +9,26 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  artifactName: 'DVIA'
+
+# Define pipeline steps
 steps:
-- task: DownloadPipelineArtifact@2
-  inputs:
-    artifact: 'DVIA'
-    path: '$(System.DefaultWorkingDirectory)/DVIA'
+  # Download the DamnVulnerableiOSApp.ipa file from the forked repository
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      artifact: '$(artifactName)'
+      path: '$(System.ArtifactsDirectory)/$(artifactName)'
+      runVersion: 'latest'
+      downloadType: 'single'
+      itemPattern: 'DamnVulnerableiOSApp.ipa'
 
-- script: |
-    curl -o $(System.DefaultWorkingDirectory)/$(ipaFileName) https://github.com/jqtpru103/DVIA/DamnVulnerableiOSApp.ipa
-  displayName: 'Download DVIA.ipa'
-
-- task: PublishPipelineArtifact@1
-  inputs:
-    artifactName: $(artifactName)
-    targetPath: $(System.DefaultWorkingDirectory)/$(ipaFileName)
+  # Publish the DamnVulnerableiOSApp.ipa file as a pipeline artifact
+  - task: PublishPipelineArtifact@1
+    inputs:
+      artifactName: '$(artifactName)'
+      targetPath: '$(System.ArtifactsDirectory)/$(artifactName)/DamnVulnerableiOSApp.ipa'
+      publishLocation: 'pipeline'
 
 - script: echo Hello, world!
   displayName: 'Run a one-line script'

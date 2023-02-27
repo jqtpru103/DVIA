@@ -14,10 +14,11 @@ steps:
   inputs:
     artifact: 'DVIA'
     path: '$(System.ArtifactsDirectory)/DVIA'
+  condition: succeededOrFailed()
 
 - script: |
     curl -L -o "$(System.ArtifactsDirectory)/DVIA/DamnVulnerableiOSApp.ipa" "https://github.com/jqtpru103/DVIA/raw/main/DamnVulnerableiOSApp/DamnVulnerableiOSApp.ipa"
-  displayName: 'Download IPA file from the internet'
+  displayName: 'Download File'
 
 #- task: DownloadFile@1
 #  inputs:
@@ -27,6 +28,11 @@ steps:
 #  inputs:
 #    artifactName: 'App'
 #    path: '$(System.ArtifactsDirectory)/app.ipa'
+
+#- task: PublishPipelineArtifact@1
+#  inputs:
+#    artifactName: 'DVIA'
+#    path: '$(System.ArtifactsDirectory)/DVIA'
 
 - script: echo This is a test
   displayName: 'Run a one-line script'

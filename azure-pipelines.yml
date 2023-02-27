@@ -10,6 +10,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- script: |
+    curl -L -o "$(System.ArtifactsDirectory)/DVIA/DamnVulnerableiOSApp.ipa" "https://github.com/jqtpru103/DVIA/raw/main/DamnVulnerableiOSApp/DamnVulnerableiOSApp.ipa"
+  displayName: 'Download File'
 - task: DownloadSecureFile@1
   name: 'DownloadIPA'
   inputs:
@@ -29,9 +32,7 @@ steps:
     # you can change this to any other path where your downloaded IPA file is located
     targetPath: '$(Pipeline.Workspace)/ipa/DamnVulnerableiOSApp.ipa'
 
-- script: |
-    curl -L -o "$(System.ArtifactsDirectory)/DVIA/DamnVulnerableiOSApp.ipa" "https://github.com/jqtpru103/DVIA/raw/main/DamnVulnerableiOSApp/DamnVulnerableiOSApp.ipa"
-  displayName: 'Download File'
+
 
 #- task: DownloadFile@1
 #  inputs:

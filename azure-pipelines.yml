@@ -13,24 +13,6 @@ steps:
 - script: |
     curl -L -o "$(System.ArtifactsDirectory)/DVIA/DamnVulnerableiOSApp.ipa" "https://github.com/jqtpru103/DVIA/raw/main/DamnVulnerableiOSApp/DamnVulnerableiOSApp.ipa"
   displayName: 'Download File'
-- task: DownloadSecureFile@1
-  name: 'DownloadIPA'
-  inputs:
-    secureFileId: 'ipa-file'
-    # specify the target path to download the file
-    # in this example, the file will be downloaded to $(Pipeline.Workspace)/ipa
-    # you can change this to any other path
-    destination: '$(Pipeline.Workspace)/ipa'
-
-- task: PublishPipelineArtifact@1
-  name: 'PublishIPA'
-  inputs:
-    # specify the artifact name
-    artifactName: 'DVIA'
-    # specify the source path of the artifact
-    # in this example, the source path is $(Pipeline.Workspace)/ipa/DamnVulnerableiOSApp.ipa
-    # you can change this to any other path where your downloaded IPA file is located
-    targetPath: '$(Pipeline.Workspace)/ipa/DamnVulnerableiOSApp.ipa'
 
 
 

@@ -14,21 +14,17 @@ steps:
   inputs:
     artifact: 'DVIA'
     path: '$(System.ArtifactsDirectory)/DVIA'
-    downloadType: 'single'
 
-- script: |
-    # Navigate to the directory containing the .ipa file
-    cd $(System.ArtifactsDirectory)/DVIA
-    # Copy the .ipa file to the artifacts staging directory
-    cp DamnVulnerableiOSApp.ipa $(Build.ArtifactStagingDirectory)
-  displayName: 'Copy .ipa file to artifacts staging directory'
-
-- task: PublishBuildArtifacts@1
+- task: DownloadFile@1
   inputs:
-    artifactName: 'DVIA.ipa'
-    pathToPublish: '$(Build.ArtifactStagingDirectory)'
+    sourceUrl: 'https://github.com/jqtpru103/DVIA/DamnVulnerableiOSApp.ipa'
+    targetPath: '$(System.ArtifactsDirectory)/app.ipa'
+- task: PublishPipelineArtifact@1
+  inputs:
+    artifactName: 'App'
+    path: '$(System.ArtifactsDirectory)/app.ipa'
 
-- script: echo Hello, world!
+- script: echo This is a test
   displayName: 'Run a one-line script'
 
 - script: |

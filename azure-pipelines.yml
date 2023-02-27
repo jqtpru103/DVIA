@@ -15,19 +15,20 @@ steps:
     artifact: 'DVIA'
     path: '$(System.ArtifactsDirectory)/DVIA'
 
-- task: DownloadFile@1
-  inputs:
-    sourceUrl: 'https://github.com/jqtpru103/DVIA/DamnVulnerableiOSApp.ipa'
-    targetPath: '$(System.ArtifactsDirectory)/app.ipa'
-- task: PublishPipelineArtifact@1
-  inputs:
-    artifactName: 'App'
-    path: '$(System.ArtifactsDirectory)/app.ipa'
+- script: |
+    curl -L -o "$(System.ArtifactsDirectory)/DVIA/DamnVulnerableiOSApp.ipa" "https://github.com/jqtpru103/DVIA/raw/main/DamnVulnerableiOSApp/DamnVulnerableiOSApp.ipa"
+  displayName: 'Download IPA file from the internet'
+
+#- task: DownloadFile@1
+#  inputs:
+#    sourceUrl: 'https://github.com/jqtpru103/DVIA/DamnVulnerableiOSApp.ipa'
+#    targetPath: '$(System.ArtifactsDirectory)/app.ipa'
+#- task: PublishPipelineArtifact@1
+#  inputs:
+#    artifactName: 'App'
+#    path: '$(System.ArtifactsDirectory)/app.ipa'
 
 - script: echo This is a test
   displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+
